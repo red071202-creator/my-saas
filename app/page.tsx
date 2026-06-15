@@ -1,12 +1,40 @@
+"use client"
+
+import Image from "next/image"
+import { useSession, signIn, signOut } from "next-auth/react"
+
 export default function Home() {
+  const { data: session } = useSession()
+
   return (
     <main>
       {/* Navbar */}
       <nav className="flex items-center justify-between px-8 py-4 border-b border-gray-200">
         <span className="text-xl font-bold text-blue-600">TaskFlow</span>
-        <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-          Login
-        </button>
+        
+        {session ? (
+          <div className="flex items-center gap-4">
+            <Image
+              src={session.user?.image ?? ""}
+              alt="avatar"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+            <span className="text-sm text-gray-700">{session.user?.name}</span>
+            <button
+              onClick={() => signOut()}
+              className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600">
+              Logout
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => signIn("google")}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+            Login
+          </button>
+        )}
       </nav>
 
       {/* Hero */}
@@ -28,25 +56,21 @@ export default function Home() {
           Everything you need to ship faster
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <div className="text-3xl mb-4">📋</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Task Management</h3>
             <p className="text-gray-500">Create, assign, and track tasks with ease. Never lose track of what needs to be done.</p>
           </div>
-
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <div className="text-3xl mb-4">🚀</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Team Collaboration</h3>
             <p className="text-gray-500">Invite your team, assign tasks, and work together in real time.</p>
           </div>
-
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <div className="text-3xl mb-4">📊</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Progress Tracking</h3>
             <p className="text-gray-500">Visualize your workflow with Kanban boards and track progress at a glance.</p>
           </div>
-
         </div>
       </section>
 
