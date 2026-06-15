@@ -76,7 +76,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="px-8 py-6 border-t border-gray-200 text-center text-gray-400 text-sm">
-        © 2024 TaskFlow. All rights reserved.
+        © 2026 TaskFlow. All rights reserved.
       </footer>
     </main>
   )
