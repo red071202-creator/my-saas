@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { createProject } from "./actions"
-import { Project } from "@/app/generated/prisma"
+import type { ProjectModel } from "@/app/generated/prisma/models"
 
 export default async function Dashboard() {
   const session = await getServerSession()
@@ -53,7 +53,7 @@ export default async function Dashboard() {
         <p className="text-gray-500 dark:text-gray-400">No projects yet. Create your first one above.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {projects.map((project: Project) => (
+          {projects.map((project: ProjectModel) => (
             <div key={project.id} className="p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-900 rounded-xl">
               <h3 className="font-semibold text-gray-900 dark:text-white">{project.name}</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm">{project.description}</p>
